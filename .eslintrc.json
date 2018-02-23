@@ -1,0 +1,9 @@
+{
+    "extends": "standard",
+    "rules": {
+    	"semi": [2, "always"],
+    	"indent": ["error", 2],
+    	"comma-spacing": ["error", {"after" : true}],
+    	"object-curly-spacing": ["error", "always"]
+    }
+}
