@@ -12,6 +12,7 @@ mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@
 const api = require('./server/routes/api');
 const eventsRoutes = require('./server/routes/events');
 const userRoutes = require('./server/routes/users');
+const smsRoutes = require('./server/routes/sms');
 
 // Parser for incoming requests
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use(function (req, res, next) {
 // API locations
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventsRoutes);
+app.use('/api/sms', smsRoutes);
 app.use('/api', api);
 
 app.all('*', function (req, res) {
