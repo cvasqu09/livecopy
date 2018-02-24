@@ -19,10 +19,18 @@ router.post('/', function (req, res, next) {
       });
     }
 
-    var phoneNumbers = user.ICENumbers;
-    for (var number in phoneNumbers) {
-    	sendNotificationText(number.number, number.provider);
+    try {
+    	sendNotificationText(req.body);
+    } catch (e) {
+    	return res.status(500).json({
+    		title: 'Error occurred while sending notification text',
+    		error: e.message
+    	});
     }
+    // var phoneNumbers = user.ICENumbers;
+    // for (var number in phoneNumbers) {
+    // 	sendNotificationText(number.number, number.provider);
+    // }
 
     res.status(200).json({
     	title: 'Success',
@@ -31,7 +39,9 @@ router.post('/', function (req, res, next) {
   });
 });
 
-function sendNotificationText (number, provider) {
+/* Sends a text messsage to the number provided in the user_info object. user_info is expected
+   to have information containing info about location, date, time, and phone number. */
+function sendNotificationText (user_info) {
   // Create the transporter for our message
   var transporter = nodemailer.createTransport({
 	  service: 'gmail',
@@ -46,22 +56,50 @@ function sendNotificationText (number, provider) {
 	  }
   });
 
+  domain = providerDomain('att');
+
   // Information about our message
   var options = {
 	  from: `"Live+ App" <${process.env.LIVE_EMAIL}>`,
-	  to: 'cvasqu09@gmail.com', // Replace with phone number / provider, Have a check for the provider domain
+	  to: `user_info.number@${domain}`, // Replace with phone number / provider, Have a check for the provider domain
 	  subject: 'Did I make it?',
-	  text: 'Perhaps'
+	  text: 'Perhaps' // Change message to contain details about event
   };
 
-  // Send message
+  // Send message with the options above
   transporter.sendMail(options, (error, info) => {
 	  if (error) {
-	    return console.log(error);
+	    throw new Error(error.message);
 	  }
 	  console.log('The message was sent!');
 	  console.log(info);
   });
+}
+
+/* Returns the domain of the provider that is passed in. The provider is expected to be one
+	 of the strings that are in the case statements. */
+function providerDomain (provider) {
+  var domain = null;
+  switch (provider) {
+  case 'sprint':
+    domain = 'messaging.sprintpcs.com';
+    break;
+  case 'tmobile':
+    domain = 'tmomail.net';
+    break;
+  case 'verizon':
+    domain = 'vtext.com';
+    break;
+  case 'att':
+    domain = 'txt.att.net';
+    break;
+  default:
+    break;
+  }
+  if (domain == null) {
+  	throw new ReferenceError(`No supported phone provider: ${provider} found`);
+  }
+  return domain;
 }
 
 module.exports = router;
