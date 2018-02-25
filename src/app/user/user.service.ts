@@ -13,15 +13,26 @@ export class UserService {
 
   // Get User Info
   getUserInfo(userId: string){
-  	return this.http.get("http://localhost:3000/api/users/" + userId);
-  																			
+  	return this.http.get("http://localhost:3000/api/users/" + userId)
+				.map((response: Response) => {
+					const res = response.json();
+					
+					// Convert json array to array of ICENumbers
+					let iceNumbers: Array<ICENumber> = []
+					for(let number of res.ICENumbers){
+						iceNumbers.push(new ICENumber(number.number, number.provider));
+					}
 
-  										// const retrievedUser = new User(
-  										// 	result.fullName,
-  										// 	result.categories,
-  										// 	result.eventIds,
+					const retrievedUser = new User(
+						res.fullName,
+						res.categories,
+						res.eventIds,
+						res.strikes,
+						iceNumbers
+					)
 
-  										// 	);
+					return retrievedUser;
+				});
   									
   }
   // Report User
