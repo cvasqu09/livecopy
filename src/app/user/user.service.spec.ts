@@ -22,16 +22,32 @@ describe('UserService', () => {
 	})
 
 
-	describe('getUserInfo', () => {
-		it('should return a user with the correct info', async(() => {
-			userService.getUserInfo("aa847edee5847831acb269a4").subscribe((user) => {
-				expect(user instanceof User).toBe(true);
-				expect(user.fullName).toBe("Josh Stuve");
+	// describe('getUserInfo', () => {
+	// 	it('should return a user with the correct info', async(() => {
+	// 		userService.getUserInfo("aa847edee5847831acb269a4").subscribe((user) => {
+	// 			expect(user instanceof User).toBe(true);
+	// 			expect(user.fullName).toBe("Josh Stuve");
+	// 			expect(user.strikes).toBe(0);
+	// 			expect(user.ICENumbers.length).toBe(2);
+	// 			expect(user.ICENumbers[0] instanceof ICENumber).toBe(true);
+	// 		})
+	// 	}))
+	// })
+
+	describe('reportUser', () => {
+		let id = "aa847edee5847831acb269a4";
+
+		it('should update the number of strikes', async(() => {
+			userService.getUserInfo(id).subscribe((user: User) => {
+				expect(user).toBeTruthy();
 				expect(user.strikes).toBe(0);
-				expect(user.ICENumbers.length).toBe(2);
-				expect(user.ICENumbers[0] instanceof ICENumber).toBe(true);
+				var strikesBeforeCall = user.strikes
+				userService.reportUser(id).subscribe((response: User) => {
+					expect(response.strikes).toBe(strikesBeforeCall + 1);
+				})
 			})
 		}))
+
 	})
 
 	

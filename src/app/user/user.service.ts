@@ -8,34 +8,46 @@ import { ICENumber } from '../ice-number/ice-number.model';
 
 @Injectable()
 export class UserService {
+	baseURL = "http://localhost:3000/api/users/";
 
   constructor(private http: Http) {}
 
   // Get User Info
   getUserInfo(userId: string){
-  	return this.http.get("http://localhost:3000/api/users/" + userId)
+  	return this.http.get(this.baseURL + userId)
 				.map((response: Response) => {
-					const res = response.json();
-					
-					// Convert json array to array of ICENumbers
-					let iceNumbers: Array<ICENumber> = []
-					for(let number of res.ICENumbers){
-						iceNumbers.push(new ICENumber(number.number, number.provider));
-					}
-
-					const retrievedUser = new User(
-						res.fullName,
-						res.categories,
-						res.eventIds,
-						res.strikes,
-						iceNumbers
-					)
-
-					return retrievedUser;
-				});
-  									
+					return this.transformIntoUserModel(response);
+				})
+				.catch((error: Response) => {
+					// Add logic for error handling service.
+					return Observable.throw(error.json());
+				});					
   }
+
   // Report User
+  reportUser(userId: string): Observable<any> {
+  	var strikes: number;
+  	/* flatmap will allow us to chain together the http requests since the first one is required in order
+  	   for the second one to occur and returns an observable. */
+  	return this.getUserInfo(userId).flatMap((user: User) => { 
+  		strikes = user.strikes
+	  	strikes++;
+
+  	// Add logic for blacklisting a user.
+			return this.http.patch(this.baseURL + userId, {"strikes": strikes})
+			.map((response: Response) => {
+				return this.transformIntoUserModel(response);
+			})
+			.catch((error: Response) => {
+					// Add logic for error handling service.
+				return Observable.throw(error.json());
+			})
+  	})
+
+
+
+  }
+
 
  	// Create User
 
@@ -47,4 +59,23 @@ export class UserService {
 
  	// get ICE Numbers
 
+ 	private transformIntoUserModel(response: Response): User{
+		const res = response.json();
+		
+		// Convert json array to array of ICENumbers
+		let iceNumbers: Array<ICENumber> = []
+		for(let number of res.ICENumbers){
+			iceNumbers.push(new ICENumber(number.number, number.provider));
+		}
+
+		const retrievedUser = new User(
+			res.fullName,
+			res.categories,
+			res.eventIds,
+			res.strikes,
+			iceNumbers
+		)
+
+		return retrievedUser;
+ 	}
 }
