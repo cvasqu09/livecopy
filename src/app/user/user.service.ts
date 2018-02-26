@@ -13,7 +13,7 @@ export class UserService {
   constructor(private http: Http) {}
 
   // Get User Info
-  getUserInfo(userId: string){
+  getUserInfo(userId: string): Observable<any>{
   	return this.http.get(this.baseURL + userId)
 				.map((response: Response) => {
 					return this.transformIntoUserModel(response);
@@ -24,6 +24,16 @@ export class UserService {
 				});					
   }
 
+ 	// Edit User
+ 	editUser(userId: string, changes: object): Observable<any> {
+ 		return this.http.patch(this.baseURL + userId, changes)
+ 			.map((response: Response) => {
+ 				return this.transformIntoUserModel(response);
+ 			}).catch((error: Response) => {
+ 				return Observable.throw(error.json());
+ 			})
+ 	}
+
   // Report User
   reportUser(userId: string): Observable<any> {
   	var strikes: number;
@@ -33,25 +43,21 @@ export class UserService {
   		strikes = user.strikes
 	  	strikes++;
 
-  	// Add logic for blacklisting a user.
+  		// Add logic for blacklisting a user.
 			return this.http.patch(this.baseURL + userId, {"strikes": strikes})
 			.map((response: Response) => {
 				return this.transformIntoUserModel(response);
 			})
 			.catch((error: Response) => {
-					// Add logic for error handling service.
+				// Add logic for error handling service.
 				return Observable.throw(error.json());
 			})
   	})
-
-
-
   }
 
 
  	// Create User
 
- 	// Edit User
 
  	// get categories
 
