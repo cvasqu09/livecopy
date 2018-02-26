@@ -5,6 +5,7 @@ export class User {
 							public categories: Array<string>,
 							public createdEventIds: Array<string>,
 							public strikes: number,
-							public ICENumbers: Array<ICENumber>){}
+							public ICENumbers: Array<ICENumber>,
+							public _id: string = null){}
 
 }

@@ -57,7 +57,15 @@ export class UserService {
 
 
  	// Create User
-
+ 	createUser(user: User): Observable<any> {
+ 		return this.http.post(this.baseURL, user)
+ 			.map((response: Response) => {
+ 				return this.transformIntoUserModel(response);
+ 			})
+ 			.catch((error: Response) => {
+ 				return Observable.throw(error.json());
+ 			})
+ 	}
 
  	// get categories
 
@@ -79,7 +87,8 @@ export class UserService {
 			res.categories,
 			res.eventIds,
 			res.strikes,
-			iceNumbers
+			iceNumbers,
+			res._id
 		)
 
 		return retrievedUser;
