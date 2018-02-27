@@ -3,6 +3,8 @@ import { HttpModule } from '@angular/http';
 import { UserService } from './user.service';
 import { User } from './user.model'; 
 import { ICENumber } from '../ice-number/ice-number.model';
+import { Observable } from "rxjs";
+
 
 /* These are integration tests that actually make HTTP requests. Clean up is needed for requests that may modify
    existing data. In case of resetting the test data visit the TeamCity server and run the Clean and Seed build configuraiton */
@@ -79,6 +81,10 @@ describe('UserService', () => {
 	})
 
 	describe('createUser', () => {
+		afterEach(async(() => {
+			userService.deleteUserWithId("ff847edee5847831acb269a4").subscribe();
+		}))
+
 		it('should create a new user with the given info', async(() => {
 			const user = new User("test user", ["chess"], [], 0, [], "ff847edee5847831acb269a4");
 			userService.createUser(user).subscribe((response: User) => {
@@ -87,6 +93,22 @@ describe('UserService', () => {
 		}))
 	})
 
+	describe('deleteUser', () => {
+		it('should delete the user from the database', async(() => {
+			userService.createUser(new User("test user", [], [], 0, [], "ffffffdee5847831acb269a4")).subscribe();
+			userService.deleteUserWithId("ffffffdee5847831acb269a4").subscribe((response) => {
+				  expect(response._id).toEqual("ffffffdee5847831acb269a4")
+			})
+		}))
+
+		it('should return error if user is not found', async(() => {
+			userService.deleteUserWithId("ffffffffffffffffffffffff").subscribe((response) => {
+				throw(new Error("Shouldn't have deleted anything"))
+			}, (error) => {
+				expect(error.title).toEqual('Error finding user');
+			})
+		}))
+	})
 	
 
 });

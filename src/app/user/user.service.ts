@@ -73,6 +73,17 @@ export class UserService {
 
  	// get ICE Numbers
 
+ 	// delete User
+ 	deleteUserWithId(userId: string): Observable<any> {
+ 		return this.http.delete(this.baseURL + userId)
+ 			.map((response: Response) => {
+ 				return this.transformIntoUserModel(response);
+ 			})
+ 			.catch((error: Response) => {
+ 				return Observable.throw(error.json());
+ 			})
+ 	}
+
  	private transformIntoUserModel(response: Response): User{
 		const res = response.json();
 		
