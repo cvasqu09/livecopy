@@ -68,6 +68,16 @@ export class UserService {
  	}
 
  	// get categories
+ 	getCategories(userId: string): Observable<any> {
+ 		return this.http.get(this.baseURL + userId)
+ 			.map((response: Response) => {
+ 				const result = response.json();
+ 				return result.categories;
+ 			})
+ 			.catch((error: Response) => {
+ 				return Observable.throw(error.json());
+ 			})
+ 	}
 
  	// add ICE Number
 

@@ -80,7 +80,7 @@ describe('UserService', () => {
 		}))
 	})
 
-	describe('createUser', () => {
+	describe('createUser with valid info', () => {
 		afterEach(async(() => {
 			userService.deleteUserWithId("ff847edee5847831acb269a4").subscribe();
 		}))
@@ -93,6 +93,19 @@ describe('UserService', () => {
 		}))
 	})
 
+	describe('createUser with invalid info', () => {
+		it('should throw a bad request', async(() => {
+			const invalidUser = new User(null, [], [], 0, [])
+			userService.createUser(invalidUser).subscribe(
+				(response) => {
+					throw(new Error('Should not have saved user'))
+				},
+				(error) => {
+					expect(error.status).toEqual(400);
+				})
+		}))
+	})
+
 	describe('deleteUser', () => {
 		it('should delete the user from the database', async(() => {
 			userService.createUser(new User("test user", [], [], 0, [], "ffffffdee5847831acb269a4")).subscribe();
@@ -102,12 +115,36 @@ describe('UserService', () => {
 		}))
 
 		it('should return error if user is not found', async(() => {
-			userService.deleteUserWithId("ffffffffffffffffffffffff").subscribe((response) => {
-				throw(new Error("Shouldn't have deleted anything"))
-			}, (error) => {
-				expect(error.title).toEqual('Error finding user');
+			userService.deleteUserWithId("ffffffffffffffffffffffff").subscribe(
+				(response) => {
+					throw(new Error("Shouldn't have deleted anything"))
+				}, 
+				(error) => {
+					expect(error.title).toEqual('Error finding user');
 			})
 		}))
+	})
+
+	describe('getCategories', () => {
+		it('should return the correct categories for a valid user', async(() => {
+			userService.getCategories(id).subscribe((response) => {
+				expect(response.length).toEqual(3);
+				expect(response[0]).toEqual("gaming")
+				expect(response[1]).toEqual("sports")
+				expect(response[2]).toEqual("other category")
+			})
+		}))
+
+		it('should return a user could not be found error msg if a valid id is given', async(() => {
+			userService.getCategories("ffffffffffffffffffffffff").subscribe(
+				res => {
+					throw Error("Should not have found a user")
+				},
+				err => {
+					expect(err.title).toEqual('User not found')
+				}
+			)
+		})
 	})
 	
 
