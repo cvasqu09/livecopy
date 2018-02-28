@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 describe('UserService', () => {
 	let userService: UserService;
 	let id = "aa847edee5847831acb269a4";
-	let testUser = new User("Josh Stuve", ["gaming", "sports", "other category"], [], 0,
+	const testUser = new User("Josh Stuve", ["gaming", "sports", "other category"], [], 0,
 													[new ICENumber("999999999", "att"), new ICENumber("888888888", "att")], "aa847edee5847831acb269a4");
 
 	beforeEach(() => {
@@ -154,9 +154,15 @@ describe('UserService', () => {
 	})
 
 	describe('addICENumber', () => {
-		afterEach(() => {
-			userService.editUser(testUser._id, testUser)
-		})
+		afterEach(async(() => {
+			const testUser = new User("Josh Stuve", ["gaming", "sports", "other category"], [], 0,
+													[new ICENumber("999999999", "att"), new ICENumber("888888888", "att")], "aa847edee5847831acb269a4");
+			userService.editUser(testUser._id, testUser).subscribe(res => {
+				console.log(res)
+			}, err => {
+				console.log("error: " + err);
+			});
+		}))
 
 		it("should add the ICE number to the user's ICE numbers", async(() => {
 			const iceNumber = new ICENumber('9158557085', 'att');;
@@ -167,6 +173,4 @@ describe('UserService', () => {
 			})
 		}))
 	})
-	
-
 });
