@@ -11,6 +11,8 @@ import { Observable } from "rxjs";
 describe('UserService', () => {
 	let userService: UserService;
 	let id = "aa847edee5847831acb269a4";
+	let testUser = new User("Josh Stuve", ["gaming", "sports", "other category"], [], 0,
+													[new ICENumber("999999999", "att"), new ICENumber("888888888", "att")], "aa847edee5847831acb269a4");
 
 	beforeEach(() => {
 			TestBed.configureTestingModule({
@@ -40,8 +42,7 @@ describe('UserService', () => {
 
 	describe('editUser', () => {
 		afterEach(async(() => {
-			userService.editUser(id, 
-				{"fullName": "Josh Stuve", "categories": ["gaming", "sports", "other category"], "strikes": 0})
+			userService.editUser(id, testUser)
 				.subscribe();
 		}));
 
@@ -58,13 +59,18 @@ describe('UserService', () => {
 			})
 		}))
 
+		it('should edit the ICENumbers for a user', async(() => {
+			userService.editUser(id, {"ICENumbers": [{"phoneNumber": "123456789", "provider": "att"}]}).subscribe((user: User) => {
+				expect(user.ICENumbers.length).toBe(1);
+				expect(user.ICENumbers[0].phoneNumber).toBe("123456789")
+			})
+		}))
+
 	});
 
 	describe('reportUser', () => {
 		afterEach(async(() => {
-			userService.editUser(id, 
-				{"fullName": "Josh Stuve", "categories": ["gaming", "sports", "other category"], "strikes": 0})
-				.subscribe();
+			userService.editUser(id, testUser).subscribe();
 		}));
 
 		it('should update the number of strikes', async(() => {
@@ -129,9 +135,9 @@ describe('UserService', () => {
 		it('should return the correct categories for a valid user', async(() => {
 			userService.getCategories(id).subscribe((response) => {
 				expect(response.length).toEqual(3);
-				expect(response[0]).toEqual("gaming")
-				expect(response[1]).toEqual("sports")
-				expect(response[2]).toEqual("other category")
+				expect(response[0]).toEqual("gaming");
+				expect(response[1]).toEqual("sports");
+				expect(response[2]).toEqual("other category");
 			})
 		}))
 
@@ -144,7 +150,22 @@ describe('UserService', () => {
 					expect(err.title).toEqual('User not found')
 				}
 			)
+		}))
+	})
+
+	describe('addICENumber', () => {
+		afterEach(() => {
+			userService.editUser(testUser._id, testUser)
 		})
+
+		it("should add the ICE number to the user's ICE numbers", async(() => {
+			const iceNumber = new ICENumber('9158557085', 'att');;
+
+			userService.addICENumber(testUser, iceNumber).subscribe((response: User) => {
+				expect(response.ICENumbers.length).toBe(3)
+				expect(response.ICENumbers[2].phoneNumber).toBe("9158557085")
+			})
+		}))
 	})
 	
 

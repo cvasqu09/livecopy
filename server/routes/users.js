@@ -35,7 +35,8 @@ router.post('/', function (req, res, next) {
   		return res.status(400).json({
 		  	title: 'Bad request',
         sent: req.body,
-		  	error: err
+		  	error: err,
+        status: 400
   		});
   	}
 

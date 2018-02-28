@@ -80,6 +80,10 @@ export class UserService {
  	}
 
  	// add ICE Number
+ 	addICENumber(user: User, iceNumber: ICENumber): Observable<any> {
+ 		user.ICENumbers.push(iceNumber)
+ 		return this.editUser(user._id, user)
+ 	}
 
  	// get ICE Numbers
 
@@ -100,7 +104,7 @@ export class UserService {
 		// Convert json array to array of ICENumbers
 		let iceNumbers: Array<ICENumber> = []
 		for(let number of res.ICENumbers){
-			iceNumbers.push(new ICENumber(number.number, number.provider));
+			iceNumbers.push(new ICENumber(number.phoneNumber, number.provider));
 		}
 
 		const retrievedUser = new User(
