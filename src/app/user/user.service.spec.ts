@@ -155,6 +155,7 @@ describe('UserService', () => {
 
 	describe('addICENumber', () => {
 		afterEach(async(() => {
+			// testUser from outermost describe is not available here as the afterEach hook is global. 
 			const testUser = new User("Josh Stuve", ["gaming", "sports", "other category"], [], 0,
 													[new ICENumber("999999999", "att"), new ICENumber("888888888", "att")], "aa847edee5847831acb269a4");
 			userService.editUser(testUser._id, testUser).subscribe(res => {
@@ -172,5 +173,26 @@ describe('UserService', () => {
 				expect(response.ICENumbers[2].phoneNumber).toBe("9158557085")
 			})
 		}))
+	})
+
+	describe('getICENumbers', () => {
+		it("should return the user's ICENumbers", async(() => {
+			userService.getICENumbers(testUser._id).subscribe((response) => {
+				expect(response.length).toBe(2);
+				expect(response[0].phoneNumber).toBe("999999999");
+				expect(response[1].phoneNumber).toBe("888888888");
+			})
+		}))
+
+		it("should return an error if invalid user is given", async(() => {
+			userService.getICENumbers("123321456563447569854124").subscribe(
+			(response) => {
+				throw(new Error("Shouldn't have found this user"))
+			},
+			(error) => {
+				expect(error.title).toBe("User not found")
+				expect(error.status).toBe(404)
+			})
+		})
 	})
 });

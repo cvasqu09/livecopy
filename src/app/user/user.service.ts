@@ -86,6 +86,16 @@ export class UserService {
  	}
 
  	// get ICE Numbers
+ 	getICENumbers(userId: string): Observable<any> {
+ 		return this.http.get(this.baseURL + userId)
+ 			.map((response: Response) => {
+ 				const result = response.json();
+ 				return result.ICENumbers;
+ 			})
+ 			.catch((error: Response) => {
+ 				return Observable.throw(error.json());
+ 			})
+ 	}
 
  	// delete User
  	deleteUserWithId(userId: string): Observable<any> {
