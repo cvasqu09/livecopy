@@ -31,7 +31,7 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = ''; //Without this, the URL will contain token information
-        this.setSession(authResult);
+        this.setLocalSession(authResult);
         console.log("Login Successful!");
       } else if (err) {
         console.log("Login Failed...");
@@ -39,11 +39,33 @@ export class AuthService {
     });
   }
 
-  private setSession(authResult): void {
+  private setLocalSession(authResult): void {
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+
+    this.setUserProfile(authResult.idTokenPayload);
+  }
+
+  private setUserProfile(userResult): void {
+    const accessToken = localStorage.getItem('access_token');
+
+    const self = this;
+
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+
+      if(profile){
+        const authId = profile.sub;
+        const fName = profile.given_name;
+        const lName = profile.family_name;
+        const profPic = profile.picture;
+        //TODO:Update DB and Profile UI.. Maybe add to local storage
+      }
+      if(err){
+        console.log("Problem retrieving profile...\n" + err);
+      }
+    });
   }
 
   public isAuthenticated(): boolean {
