@@ -18,7 +18,8 @@ router.get('/:id', function (req, res, next) {
 
     if (user == null) {
       return res.status(404).json({
-        title: 'User not found'
+        title: 'User not found',
+        status: 404
       });
     }
 

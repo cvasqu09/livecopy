@@ -193,6 +193,6 @@ describe('UserService', () => {
 				expect(error.title).toBe("User not found")
 				expect(error.status).toBe(404)
 			})
-		})
+		}))
 	})
 });

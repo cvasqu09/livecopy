@@ -25,7 +25,8 @@ var eventSchema = new Schema({
   startTime: { type: Number }, // How are we going to store the time and what time zone will we use as reference?
   endTime: { type: Number },
   description: { type: String }, // Limit the length?
-  eventOwner: { type: String, required: true }
+  eventOwner: { type: String, required: true },
+  _id: { type: Schema.Types.ObjectId }
 },
 { versionKey: false });
 

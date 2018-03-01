@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: Http) {}
 
-  // Get User Info
+  // TODO Add error service for handling any error for popups to each of the functions
   getUserInfo(userId: string): Observable<any>{
   	return this.http.get(this.baseURL + userId)
 				.map((response: Response) => {
@@ -24,7 +24,6 @@ export class UserService {
 				});					
   }
 
- 	// Edit User
  	editUser(userId: string, changes: object): Observable<any> {
  		return this.http.patch(this.baseURL + userId, changes)
  			.map((response: Response) => {
@@ -34,7 +33,6 @@ export class UserService {
  			})
  	}
 
-  // Report User
   reportUser(userId: string): Observable<any> {
   	var strikes: number;
   	/* flatmap will allow us to chain together the http requests since the first one is required in order
@@ -56,7 +54,6 @@ export class UserService {
   }
 
 
- 	// Create User
  	createUser(user: User): Observable<any> {
  		return this.http.post(this.baseURL, user)
  			.map((response: Response) => {
@@ -67,7 +64,6 @@ export class UserService {
  			})
  	}
 
- 	// get categories
  	getCategories(userId: string): Observable<any> {
  		return this.http.get(this.baseURL + userId)
  			.map((response: Response) => {
@@ -79,13 +75,11 @@ export class UserService {
  			})
  	}
 
- 	// add ICE Number
  	addICENumber(user: User, iceNumber: ICENumber): Observable<any> {
  		user.ICENumbers.push(iceNumber)
  		return this.editUser(user._id, user)
  	}
 
- 	// get ICE Numbers
  	getICENumbers(userId: string): Observable<any> {
  		return this.http.get(this.baseURL + userId)
  			.map((response: Response) => {
@@ -97,7 +91,6 @@ export class UserService {
  			})
  	}
 
- 	// delete User
  	deleteUserWithId(userId: string): Observable<any> {
  		return this.http.delete(this.baseURL + userId)
  			.map((response: Response) => {

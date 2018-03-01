@@ -3,8 +3,9 @@ export class Event {
 							public categories: Array<string>,
 							public numPeople: number,
 							public location: string,
-							startTime: number,
-							endTime: number,
-							description: string,
-							eventOwner: string){}
+							public startTime: number,
+							public endTime: number,
+							public description: string,
+							public eventOwner: string,
+							public _id: string){}
 }
