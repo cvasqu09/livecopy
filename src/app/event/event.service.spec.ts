@@ -71,15 +71,15 @@ describe('EventService', () => {
   			err => {
   				expect(err.title).toBe('Error finding event')
   			})
-  	})
+  	}))
   })
 
   describe('createEvent with valid data', () => {
   	const testEvent = new Event("Black Panther", ["movie"], 1, "Wakanda", 800, 1000,
-  																"Watch it", "T'chala", "ffffffffffffffffffffffff")
-  	afterEach(() => {
+  																"Watch it", "T'chala", "ffffffffffffffffffffffff", 0)
+  	afterEach(async(() => {
   		eventService.deleteEventWithId(testEvent._id).subscribe()
-  	})
+  	}))
 
   	it('should return the event that was created for valid data', async(() => {
   		eventService.createEvent(testEvent).subscribe((response: Event) => {
@@ -99,6 +99,56 @@ describe('EventService', () => {
   			(error) => {
   				expect(error.title).toBe('Bad request')
   			})
+  	}))
+  })
+
+  describe('editEvent', () => {
+		const testEvent = new Event("Watch Fight Club", ["category1"], 0, "123 Street",
+																200, 330, "watch the movie", "Chris V", "bbbbbbbbbbbbbbbbbbbbbbbb")
+		const updatedEvent = new Event("Watch Breakfast Club", ["movie"], 1, "1234 Street",
+																	 400, 500, "Watch this", "Chris V", "bbbbbbbbbbbbbbbbbbbbbbbb", 0)
+		beforeEach(async(() => {
+			eventService.createEvent(testEvent).subscribe()
+		}))
+
+		afterEach(async(() => {
+			eventService.deleteEventWithId("bbbbbbbbbbbbbbbbbbbbbbbb").subscribe()
+		}))
+
+  	it('should return the updated event for valid changes', async(() => {
+  		eventService.editEventWithId("bbbbbbbbbbbbbbbbbbbbbbbb", updatedEvent).subscribe(res => {
+  			expect(res).toEqual(updatedEvent);
+  		})
+  	}))
+
+  	it('should return an error if invalid changes are provided', async(() => {
+  		const eventWithoutCategories = new Event("invalid event", [], 0, "here", 100, 200,
+  																						 "I am invalid", "Random", "bbbbbbbbbbbbbbbbbbbbbbbb")
+  		eventService.editEventWithId("bbbbbbbbbbbbbbbbbbbbbbbb", eventWithoutCategories).subscribe(
+  			res => {
+  				throw new Error("Shouldn't have accepted changes")
+  			},
+  			err => {
+  				expect(err.error.message).toContain('Validation failed:')
+  			})
+  	}))
+  })
+
+  describe('reportEventWithId', () => {
+  	const testEvent = new Event("Black Panther", ["movie"], 1, "Wakanda", 800, 1000,
+														"Watch it", "T'chala", "ffffffffffffffffffffffff", 0)
+  	beforeEach(async(() => {
+  		eventService.createEvent(testEvent).subscribe()
+  	}))
+
+  	afterEach(async(() => {
+  		eventService.deleteEventWithId(testEvent._id).subscribe()
+  	}))
+
+  	it('should update the number of reports for the event', async(() => {
+  		eventService.reportEventWithId(testEvent._id).subscribe(res => {
+  			expect(res.reports).toBe(1)
+  		})
   	}))
   })
 });

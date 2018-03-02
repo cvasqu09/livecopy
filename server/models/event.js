@@ -26,6 +26,7 @@ var eventSchema = new Schema({
   endTime: { type: Number },
   description: { type: String }, // Limit the length?
   eventOwner: { type: String, required: true },
+  reports: { type: Number, default: 0 },
   _id: { type: Schema.Types.ObjectId }
 },
 { versionKey: false });
