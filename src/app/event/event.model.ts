@@ -2,7 +2,7 @@ export class Event {
 	constructor(public eventName: string,
 							public categories: Array<string>,
 							public numPeople: number,
-							public location: string,
+							public location: Array<number>, // Change this to use geojson eventually?
 							public startTime: number,
 							public endTime: number,
 							public description: string,

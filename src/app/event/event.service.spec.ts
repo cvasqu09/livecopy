@@ -18,7 +18,6 @@ describe('EventService', () => {
 			eventService = TestBed.get(EventService);
 	});
 
-
   it('should be instantiated', () => {
   	expect(eventService).toBeTruthy();
   });
@@ -26,7 +25,7 @@ describe('EventService', () => {
   describe('getEventById', () => {
   	it('should return the event with the correct info', async(() => {
   		eventService.getEventById(testId).subscribe((event: Event) => {
-  			expect(event.location).toBe("537 Paper Street, Bradford")
+  			expect(event.location[0]).toBeCloseTo(3.40175439939583, 5)
   			expect(event.eventOwner).toBe("Dhruuv Khurana")
   			expect(event.numPeople).toBe(2)
   			expect(event.endTime).toBe(1000)
@@ -42,7 +41,7 @@ describe('EventService', () => {
   })
 
   describe('deleteEventWithId with a valid id', () => {
-  	const testEvent = new Event("Black Panther", ["movie"], 1, "Wakanda", 800, 1000,
+  	const testEvent = new Event("Black Panther", ["movie"], 1, [-67.66891479492188,7.972197714386878], 800, 1000,
 															"Watch it", "T'chala", "fffffffffffffffffffffffa")
   	beforeEach(() => {
   		eventService.createEvent(testEvent).subscribe()
@@ -75,7 +74,7 @@ describe('EventService', () => {
   })
 
   describe('createEvent with valid data', () => {
-  	const testEvent = new Event("Black Panther", ["movie"], 1, "Wakanda", 800, 1000,
+  	const testEvent = new Event("Black Panther", ["movie"], 1, [-67.66891479492188,7.972197714386878], 800, 1000,
   																"Watch it", "T'chala", "ffffffffffffffffffffffff", 0)
   	afterEach(async(() => {
   		eventService.deleteEventWithId(testEvent._id).subscribe()
@@ -90,7 +89,7 @@ describe('EventService', () => {
 
   describe('createEvent with invalid data', () => {
   	it('should return an error if the event has invalid data', async(() => {
-  		const malformedTestEvent = new Event("Bad test", null, 1, "Wonderland", 100, 200,
+  		const malformedTestEvent = new Event("Bad test", null, 1, [-64.15328979492188,-5.266007882805485], 100, 200,
   																				 "Place description here", null, "aaaaaaaaaaaaaaaaaaaaaaaa")
   		eventService.createEvent(malformedTestEvent).subscribe(
   			(response) => {
@@ -103,9 +102,9 @@ describe('EventService', () => {
   })
 
   describe('editEvent', () => {
-		const testEvent = new Event("Watch Fight Club", ["category1"], 0, "123 Street",
+		const testEvent = new Event("Watch Fight Club", ["category1"], 0, [-64.15328979492188,-5.266007882805485],
 																200, 330, "watch the movie", "Chris V", "bbbbbbbbbbbbbbbbbbbbbbbb")
-		const updatedEvent = new Event("Watch Breakfast Club", ["movie"], 1, "1234 Street",
+		const updatedEvent = new Event("Watch Breakfast Club", ["movie"], 1, [-65.12008666992188,-14.349547837185362],
 																	 400, 500, "Watch this", "Chris V", "bbbbbbbbbbbbbbbbbbbbbbbb", 0)
 		beforeEach(async(() => {
 			eventService.createEvent(testEvent).subscribe()
@@ -122,7 +121,7 @@ describe('EventService', () => {
   	}))
 
   	it('should return an error if invalid changes are provided', async(() => {
-  		const eventWithoutCategories = new Event("invalid event", [], 0, "here", 100, 200,
+  		const eventWithoutCategories = new Event("invalid event", [], 0, [-55.891571044921875,-8.146242825034385], 100, 200,
   																						 "I am invalid", "Random", "bbbbbbbbbbbbbbbbbbbbbbbb")
   		eventService.editEventWithId("bbbbbbbbbbbbbbbbbbbbbbbb", eventWithoutCategories).subscribe(
   			res => {
@@ -135,7 +134,7 @@ describe('EventService', () => {
   })
 
   describe('reportEventWithId', () => {
-  	const testEvent = new Event("Black Panther", ["movie"], 1, "Wakanda", 800, 1000,
+  	const testEvent = new Event("Black Panther", ["movie"], 1, [-55.891571044921875,-8.146242825034385], 800, 1000,
 														"Watch it", "T'chala", "ffffffffffffffffffffffff", 0)
   	beforeEach(async(() => {
   		eventService.createEvent(testEvent).subscribe()

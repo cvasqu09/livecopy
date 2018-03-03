@@ -9,10 +9,11 @@ import 'rxjs/Rx';
 export class EventService {
 	baseURL = "http://localhost:3000/api/events/";
 
+	// TODO add authentication service to verify a user is logged in before making the requests
   constructor(private http: Http) { 
 
   }
-  // Get Live Events (add intial set of filters to reduce amount of events sent back)
+  // Get Live Events (add intial set of filters to reduce amount of events sent back?)
 
   
   // Get EventById
