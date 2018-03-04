@@ -4,10 +4,10 @@
 			<a class="navbar-brand" href="#">Live+</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Home</a></li>
-			<li><a href="#">Profile</a></li>
-			<li><a href="#">About Us</a></li>
+			<li routerLinkActive="active"><a [routerLink]="['/home']">Home</a></li>
+			<li routerLinkActive="active"><a [routerLink]="['/profile']">Profile</a></li>
+			<li routerLinkActive="active"><a href="#">About Us</a></li>
 		</ul>
 	</div>
 </nav>
-<app-home></app-home>
+<router-outlet></router-outlet>

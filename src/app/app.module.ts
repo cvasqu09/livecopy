@@ -9,6 +9,9 @@ import { SearchComponent } from './home/search/search.component';
 import { GoogleMapComponent } from './home/google-map/google-map.component';
 import { SearchBarComponent } from './home/search/search-bar/search-bar.component';
 import { DropdownComponent } from './home/search/dropdown/dropdown.component';
+import { appRoutes } from './frontend.routing';
+import { ProfileComponent } from './profile/profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,11 +19,13 @@ import { DropdownComponent } from './home/search/dropdown/dropdown.component';
     SearchComponent,
     GoogleMapComponent,
     SearchBarComponent,
-    DropdownComponent
+    DropdownComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    appRoutes
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
