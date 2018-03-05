@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -11,6 +12,7 @@ import { SearchBarComponent } from './home/search/search-bar/search-bar.componen
 import { DropdownComponent } from './home/search/dropdown/dropdown.component';
 import { appRoutes } from './frontend.routing';
 import { ProfileComponent } from './profile/profile.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,13 @@ import { ProfileComponent } from './profile/profile.component';
     GoogleMapComponent,
     SearchBarComponent,
     DropdownComponent,
-    ProfileComponent
+    ProfileComponent,
+    EventDetailsComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
+    FormsModule,
     appRoutes
   ],
   providers: [UserService],

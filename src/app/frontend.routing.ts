@@ -7,7 +7,7 @@ import { HomeComponent } from "./home/home.component";
 const ROUTES: Routes = [
 	// { path: '', redirectTo: 'signin', pathMatch: 'full'},
 	// { path: "signin", component: }
-	{ path: "profile", component: ProfileComponent }, 
+	{ path: "profile", component: ProfileComponent }, // Change path to profile/:id once profiles are handled
 	{ path: "home", component: HomeComponent }
 ];
 

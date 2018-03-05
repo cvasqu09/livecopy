@@ -1,7 +1,9 @@
 <div class="dropdown">
-	<button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Categories<span class="caret"></span></button>
+	<button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">Categories <span class="caret"></span></button>
 	
 	<ul class="dropdown-menu">
-		<li *ngFor="let category of presetCategories"><a href="#">{{ category }}</a></li>
+		<li *ngFor="let category of presetCategories">
+			<a href="#">{{ category }}</a>
+		</li>
 	</ul>
 </div>
