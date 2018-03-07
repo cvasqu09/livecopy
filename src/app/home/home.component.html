@@ -1,4 +1,15 @@
 <div class="container">
-	<app-search></app-search>
-	<app-google-map></app-google-map>
+	<div class="row">
+		<div class="col-xs-8 col-md-6">
+			<app-search-bar></app-search-bar>
+		</div>
+		<div class="col-xs-4 col-md-6">
+			<div class="dropdown">
+				<app-dropdown></app-dropdown>				
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<app-google-map></app-google-map>
+	</div>
 </div>
