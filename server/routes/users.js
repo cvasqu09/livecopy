@@ -18,7 +18,8 @@ router.get('/:id', function (req, res, next) {
 
     if (user == null) {
       return res.status(404).json({
-        title: 'User not found'
+        title: 'User not found',
+        status: 404
       });
     }
 
@@ -34,7 +35,9 @@ router.post('/', function (req, res, next) {
   	if (err) {
   		return res.status(400).json({
 		  	title: 'Bad request',
-		  	error: err
+        sent: req.body,
+		  	error: err,
+        status: 400
   		});
   	}
 

@@ -32,7 +32,8 @@ router.get('/:_id', function (req, res, next) {
 
     if (event == null) {
       return res.status(404).json({
-        title: 'No event found'
+        title: 'No event found',
+        error: err
       });
     }
 

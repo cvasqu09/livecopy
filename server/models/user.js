@@ -8,7 +8,9 @@ var userSchema = new Schema({
     required: true
   },
   eventIds: [{ type: Schema.Types.ObjectId, ref: 'Event' }],
-  strikes: { type: Number }
+  strikes: { type: Number },
+  ICENumbers: [{ phoneNumber: String, provider: String }],
+  _id: { type: Schema.Types.ObjectId }
 },
 { versionKey: false });
 
