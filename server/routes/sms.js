@@ -20,7 +20,7 @@ router.post('/', function (req, res, next) {
     }
 
     try {
-    	sendNotificationText(req.body);
+    	sendNotificationText(user);
     } catch (e) {
     	return res.status(500).json({
     		title: 'Error occurred while sending notification text',
@@ -42,6 +42,7 @@ router.post('/', function (req, res, next) {
 /* Sends a text messsage to the number provided in the user_info object. user_info is expected
    to have information containing info about location, date, time, and phone number. */
 function sendNotificationText (user_info) {
+  console.log('Sending texts to: ' + user_info.ICENumbers);
   // Create the transporter for our message
   var transporter = nodemailer.createTransport({
 	  service: 'gmail',
@@ -56,23 +57,31 @@ function sendNotificationText (user_info) {
 	  }
   });
 
-  domain = providerDomain('att');
+  user_info.ICENumbers.forEach(function (number) {
+    console.log(number);
+    console.log(number.provider);
+    phoneProviderDomain = providerDomain(number.provider);
+    // Information about our message
+    var options = {
+  	  from: `"Live+ App" <${process.env.LIVE_EMAIL}>`,
+  	  to: `${number.phoneNumber}@${phoneProviderDomain}`, // Replace with phone number / provider, Have a check for the provider domain
+  	  subject: 'Did I make it?',
+  	  text: 'Perhaps' // Change message to contain details about event
+    };
 
-  // Information about our message
-  var options = {
-	  from: `"Live+ App" <${process.env.LIVE_EMAIL}>`,
-	  to: `user_info.number@${domain}`, // Replace with phone number / provider, Have a check for the provider domain
-	  subject: 'Did I make it?',
-	  text: 'Perhaps' // Change message to contain details about event
-  };
-
-  // Send message with the options above
-  transporter.sendMail(options, (error, info) => {
-	  if (error) {
-	    throw new Error(error.message);
-	  }
-	  console.log('The message was sent!');
-	  console.log(info);
+    if (number.confirmed)
+    // Send message with the options above
+    {
+      transporter.sendMail(options, (error, info) => {
+    	  if (error) {
+    	    throw new Error(error.message);
+    	  }
+    	  console.log('The message was sent!');
+    	  console.log(info);
+      });
+    } else {
+      throw 'Message not sent. Phone number is not confirmed.';
+    }
   });
 }
 
