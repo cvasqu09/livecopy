@@ -29,7 +29,7 @@ export class EventService {
 
 
   // Create Event
-  createEvent(event: Event) {
+  createEvent(event: Event): Observable<any> {
   	return this.http.post(this.baseURL, event)
   		.map((response: Response) => {
   			return this.transformIntoEventModel(response)
@@ -40,7 +40,7 @@ export class EventService {
   }
 
   // Delete Event
-  deleteEventWithId(eventId: string) {
+  deleteEventWithId(eventId: string): Observable<any> {
   	return this.http.delete(this.baseURL + eventId)
   		.map((response:Response) => {
   			return this.transformIntoEventModel(response)
@@ -51,21 +51,23 @@ export class EventService {
   }
 
   // Report Event
-  reportEventWithId(eventId: string) {
+  reportEventWithId(eventId: string): Observable<any> {
   	return this.getEventById(eventId).flatMap((event: Event) => {
-  		const reports = event.reports++;
-  		return this.http.patch(eventId, {"reports": reports})
-  			.map((response: Response) => {
-  				return this.transformIntoEventModel(response);
-  			})
-  			.catch((error: Response) => {
+      const reports = event.reports + 1;
+      return this.http.patch(this.baseURL + eventId, {"reports": reports})
+        .map((response: Response) => {
+          return this.transformIntoEventModel(response);
+        })
+        .catch((error: Response) => {
+          debugger
+          console.log(error)
   				return Observable.throw(error)
   			})
   	})
   }
 
   // Edit Event
-  editEventWithId(eventId: string, changes: object) {
+  editEventWithId(eventId: string, changes: object): Observable<any> {
   	return this.http.patch(this.baseURL + eventId, changes)
   		.map((response: Response) => {
   			return this.transformIntoEventModel(response);

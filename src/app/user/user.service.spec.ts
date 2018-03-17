@@ -23,19 +23,14 @@ describe('UserService', () => {
 			userService = TestBed.get(UserService);
 	});
 
-	it('should be instantiated', () => {
-		expect(userService).toBeTruthy();
-	})
-
-
 	describe('getUserInfo', () => {
 		it('should return a user with the correct info', async(() => {
 			userService.getUserInfo(id).subscribe((user) => {
-				expect(user instanceof User).toBe(true);
 				expect(user.fullName).toBe("Josh Stuve");
 				expect(user.strikes).toBe(0);
 				expect(user.ICENumbers.length).toBe(2);
 				expect(user.ICENumbers[0] instanceof ICENumber).toBe(true);
+				expect(user.ICENumbers[0].confirmed).toBe(false);
 			})
 		}))
 	})
