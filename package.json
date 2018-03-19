@@ -42,6 +42,7 @@
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
+    "auth0-js": "^9.3.3",
     "codelyzer": "^4.0.1",
     "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^11.0.0-beta.0",

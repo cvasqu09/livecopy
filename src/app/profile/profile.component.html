@@ -1,35 +1,17 @@
-<div class="container-fluid">
+<div class="container">
 	<form>
 	  <div class="form-group">
-	  	<div class="row">
-		  	<div class="col-xs-12">
-	  			<label for="fullName">Name</label>
-	    		<input type="email" class="form-control" id="fullName" [value]="user.fullName">	
-	  		</div>
-	  	</div>
+	  		<label class="h4" for="fullName">Name</label>
+	    	<input type="email" class="form-control" id="fullName" [value]="user.fullName">
 	  </div>
-	  <hr>
 		<div class="form-group">
-			<div class="row">
-				<div class="col-xs-12">
-					<label for="createdEvents">Your Events</label>
+					<label class="h4" for="createdEvents">Your Events</label>
 					<app-event-details *ngFor="let userEvent of userCreatedEvents" [event]="userEvent"></app-event-details>
-				</div>
-			</div>
 		</div>
-		<hr>
 	  <div class="form-group">
-	  	<div class="row">
-	  		<div class="col-xs-12">
-  			  <label for="categories">Hobbies/Interests</label>
-			    <ul>
-			    	<li *ngFor="let category of user.categories">
-							<span class="label label-success">{{category}}</span>
-			    	</li>
-			    </ul>
-	  		</div>
-	  	</div>
+		  <label class="h4" for="categories">Hobbies/Interests</label>
+			<br>
+			<span *ngFor="let category of user.categories" class="badge badge-pill badge-success">{{category}}</span>
 	  </div>
-	  <hr>
-	</form>	
+	</form>
 </div>
