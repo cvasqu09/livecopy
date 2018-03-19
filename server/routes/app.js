@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+// Handles the inital serving of our Angular application
 router.get('/', function (req, res, next) {
-  res.send('Use an endpoint such as /events or /users to use the API.');
+  res.render('index');
 });
 
 module.exports = router;
