@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
 import { HttpModule } from '@angular/http';
 import { UserService } from './user/user.service';
 import { HomeComponent } from './home/home.component';
@@ -29,7 +30,11 @@ import { EventDetailsComponent } from './event-details/event-details.component';
     FormsModule,
     appRoutes
   ],
-  providers: [UserService],
+
+  providers: [
+    UserService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
