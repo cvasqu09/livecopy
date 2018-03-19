@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -8,10 +8,18 @@ import { AuthService } from '../auth.service';
 })
 export class LoginAuthComponent implements OnInit {
 
-  constructor(public auth: AuthService) {
-    auth.handleAuthentication(); // This will run on load.
-  }
+  @ViewChild('openLoginModal') button:ElementRef;
+
+  constructor(public auth: AuthService) {} //Reference to modal button to trigger modal automically
 
   ngOnInit() {
+    this.auth.handleAuthentication();
+    if(this.auth.isAuthenticated()){
+      console.log("User is logged in!");
+    }
+    else{
+      this.button.nativeElement.click();
+      console.log("Trigger Login Modal");
+    }
   }
 }
