@@ -1,0 +1,9 @@
+<div *ngFor="let error of errors; let i = index">
+	<div class="alert alert-danger alert-dismissable fade in" role="alert">
+		<button type="button" class="close" aria-label="Close" (click)="onClose(i)">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h5><b>{{error?.title}}</b></h5>
+		<p>{{error?.message}}</p>
+	</div>
+</div>

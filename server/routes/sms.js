@@ -8,14 +8,15 @@ router.post('/', function (req, res, next) {
   User.findById(req.body.id, function (err, user) {
     if (err) {
       return res.status(500).json({
-        title: 'Error occurred while sending SMS to contacts',
-        error: err
+        title: 'Internal service error',
+        message: 'Error occurred while sending SMS to contacts'
       });
     }
 
     if (user == null) {
       return res.status(404).json({
-        title: 'User not found'
+        title: 'User not found',
+        message: 'The provided user could not be found'
       });
     }
 
@@ -23,8 +24,8 @@ router.post('/', function (req, res, next) {
     	sendNotificationText(user);
     } catch (e) {
     	return res.status(500).json({
-    		title: 'Error occurred while sending notification text',
-    		error: e.message
+    		title: e.title,
+    		message: e.message
     	});
     }
     // var phoneNumbers = user.ICENumbers;
@@ -74,13 +75,13 @@ function sendNotificationText (user_info) {
     {
       transporter.sendMail(options, (error, info) => {
     	  if (error) {
-    	    throw new Error(error.message);
+    	    throw { title: 'SMS error', message: 'Error occurred while sending an SMS' };
     	  }
     	  console.log('The message was sent!');
     	  console.log(info);
       });
     } else {
-      throw 'Message not sent. Phone number is not confirmed.';
+      throw { title: 'Unconfirmed number', message: 'The provided phone number has not confirmed to be an ICE contact' };
     }
   });
 }

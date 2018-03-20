@@ -13,6 +13,9 @@ import { DropdownComponent } from './home/dropdown/dropdown.component';
 import { appRoutes } from './frontend.routing';
 import { ProfileComponent } from './profile/profile.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { TestMessageServiceComponent } from './test-message-service/test-message-service.component';
+import { ErrorComponent } from './error/error.component';
+import { ErrorService } from './error/error.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { EventDetailsComponent } from './event-details/event-details.component';
     SearchBarComponent,
     DropdownComponent,
     ProfileComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    TestMessageServiceComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

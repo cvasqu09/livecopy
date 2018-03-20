@@ -2,6 +2,7 @@ import { Http, Response, Headers } from "@angular/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Event } from './event.model';
+import { ErrorService } from '../error/error.service';
 
 import 'rxjs/Rx';
 
@@ -10,7 +11,7 @@ export class EventService {
 	baseURL = "http://localhost:3000/api/events/";
 
 	// TODO add authentication service to verify a user is logged in before making the requests
-  constructor(private http: Http) { 
+  constructor(private http: Http, private errorService: ErrorService) { 
 
   }
   // Get Live Events (add intial set of filters to reduce amount of events sent back?)

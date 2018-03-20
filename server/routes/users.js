@@ -11,15 +11,15 @@ router.get('/:id', function (req, res, next) {
   User.findById(req.params.id, function (err, user) {
     if (err) {
       return res.status(500).json({
-        title: 'Error occurred while retrieving user',
-        error: err
+        title: '500 Internal server error',
+        message: 'Error occurred while retrieving user'
       });
     }
 
     if (user == null) {
       return res.status(404).json({
-        title: 'User not found',
-        status: 404
+        title: '404 Not found',
+        message: 'User not found'
       });
     }
 
@@ -34,10 +34,11 @@ router.post('/', function (req, res, next) {
   user.save(function (err, result) {
   	if (err) {
   		return res.status(400).json({
-		  	title: 'Bad request',
+		  	title: '400 Bad request',
         sent: req.body,
 		  	error: err,
-        status: 400
+        status: 400,
+        message: 'Bad request sent'
   		});
   	}
 
@@ -50,14 +51,15 @@ router.patch('/:id', function (req, res, next) {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }, function (err, user) {
     if (err) {
       return res.status(500).json({
-        title: 'Error occurred while patching user',
-        error: err
+        title: '500 Internal server error occurred',
+        error: 'Error occurred while patching user'
       });
     }
 
     if (user == null) {
       return res.status(404).json({
-        title: 'Error no object found'
+        title: '404 Error',
+        message: 'No user found'
       });
     }
 
@@ -70,23 +72,26 @@ router.delete('/:id', function (req, res, next) {
   User.findById(req.params.id, function (err, user) {
     if (err) {
       return res.status(500).json({
-        title: 'Error occurred while finding user.',
-        error: err
+        title: '500 Internal server error',
+        error: err,
+        message: 'Error occurred while finding user.'
       });
     }
 
     if (user == null) {
     	return res.status(404).json({
-    		title: 'Error finding user',
-    		error: err
+    		title: '404 Error',
+    		error: err,
+        message: 'Error finding user'
     	});
     }
 
     User.findByIdAndRemove({ _id: req.params.id }, function (err, deletedUser) {
       if (err) {
         return res.status(500).json({
-          title: 'Error while deleting user.',
-          error: err
+          title: '500 Internal server error.',
+          error: err,
+          message: 'Error occurred while deleting user'
         });
       }
 
