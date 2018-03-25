@@ -136,18 +136,22 @@ describe('EventService', () => {
   describe('reportEventWithId', () => {
   	const testEvent = new Event("Black Panther", ["movie"], 1, [-55.891571044921875,-8.146242825034385], 800, 1000,
 														"Watch it", "T'chala", "ffffffffffffffffffffffff", 0)
-  	beforeEach(async(() => {
+  	beforeEach(() => {
+      console.log("creating before")
   		eventService.createEvent(testEvent).subscribe()
-  	}))
+  	})
 
   	afterEach(async(() => {
+      console.log("after call")
   		eventService.deleteEventWithId(testEvent._id).subscribe()
   	}))
 
   	it('should update the number of reports for the event', async(() => {
   		eventService.reportEventWithId(testEvent._id).subscribe(res => {
   			expect(res.reports).toBe(1)
-  		})
+  		}, err => {
+        throw new Error("Should have found the event to update the reports")
+      })
   	}))
   })
 });
