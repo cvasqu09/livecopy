@@ -11,20 +11,23 @@ import { UserService } from '../user/user.service';
 })
 export class LoginAuthComponent implements OnInit {
 
-  @ViewChild('openLoginModal') button:ElementRef;
+  @ViewChild('openLoginModal') button:ElementRef;  //Reference to modal button to trigger modal automically
 
-  constructor(public auth: AuthService, private userService: UserService) {} //Reference to modal button to trigger modal automically
+  constructor(public auth: AuthService, private userService: UserService) {}
 
   ngOnInit() {
     this.auth.handleAuthentication();
     if(this.auth.isAuthenticated()){
 
-      console.log("Check user")
+      // this.userService.createUser(new User("Test Name", [],[],0,[])).subscribe(response => {
+      //   console.log(response);
+      // });
+      this.userService.getUserInfo('aaXX847edee5847831acb269a4').subscribe(response =>{
+        console.log(response);
+      });
     }
     else{
       this.button.nativeElement.click();
     }
   }
-
-
 }
