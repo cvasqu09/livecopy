@@ -8,7 +8,7 @@ import { ICENumber } from '../ice-number/ice-number.model';
 
 @Injectable()
 export class UserService {
-	baseURL = "http://localhost:3000/api/users/";
+	baseURL = "http://liveapp-cluster-shard-00-00-jy1qa.mongodb.net:27017/api/users/";
 
   constructor(private http: Http) {}
 
@@ -21,7 +21,7 @@ export class UserService {
 				.catch((error: Response) => {
 					// Add logic for error handling service.
 					return Observable.throw(error.json());
-				});					
+				});
   }
 
  	editUser(userId: string, changes: object): Observable<any> {
@@ -37,7 +37,7 @@ export class UserService {
   	var strikes: number;
   	/* flatmap will allow us to chain together the http requests since the first one is required in order
   	   for the second one to occur and returns an observable. */
-  	return this.getUserInfo(userId).flatMap((user: User) => { 
+  	return this.getUserInfo(userId).flatMap((user: User) => {
   		strikes = user.strikes
 	  	strikes++;
 
@@ -103,7 +103,7 @@ export class UserService {
 
  	private transformIntoUserModel(response: Response): User{
 		const res = response.json();
-		
+
 		// Convert json array to array of ICENumbers
 		let iceNumbers: Array<ICENumber> = []
 		for(let number of res.ICENumbers){
