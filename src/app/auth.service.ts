@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
 
+
 @Injectable()
 export class AuthService {
 
@@ -24,6 +25,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('user_id');
     window.location.reload();
     console.log("Logout Successful!");
   }
@@ -55,13 +57,8 @@ export class AuthService {
     const self = this;
 
     this.auth0.client.userInfo(accessToken, (err, profile) => {
-
       if(profile){
-        const authId = profile.sub;
-        const fName = profile.given_name;
-        const lName = profile.family_name;
-        const profPic = profile.picture;
-        //TODO:Update DB and Profile UI.. Maybe add to local storage
+        localStorage.setItem("user_id", profile.sub);
       }
       if(err){
         console.log("Problem retrieving profile...\n" + err);
