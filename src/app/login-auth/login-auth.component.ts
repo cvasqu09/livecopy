@@ -18,14 +18,13 @@ export class LoginAuthComponent implements OnInit {
   ngOnInit() {
     this.auth.handleAuthentication();
     if(this.auth.isAuthenticated()){
-      this.userService.getUserInfo("aa847edee5847831acb269a4").subscribe(response => {
-        console.log(response);
-      });
-      console.log("User should be created... ");
+
+      console.log("Check user")
     }
     else{
       this.button.nativeElement.click();
-      console.log("Trigger Login Modal");
     }
   }
+
+
 }

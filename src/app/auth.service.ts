@@ -35,11 +35,11 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = ''; //Without this, the URL will contain token information
         this.setLocalSession(authResult);
-        console.log("Login Successful!");
+        window.location.reload();
       } else if (err) {
-        console.log("Login Failed...");
       }
     });
+
   }
 
   private setLocalSession(authResult): void {
