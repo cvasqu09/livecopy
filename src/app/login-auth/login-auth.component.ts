@@ -6,7 +6,8 @@ import { UserService } from '../user/user.service';
 @Component({
   selector: 'app-login-auth',
   templateUrl: './login-auth.component.html',
-  styleUrls: ['./login-auth.component.css']
+  styleUrls: ['./login-auth.component.css'],
+  providers: [UserService]
 })
 export class LoginAuthComponent implements OnInit {
 
@@ -17,8 +18,10 @@ export class LoginAuthComponent implements OnInit {
   ngOnInit() {
     this.auth.handleAuthentication();
     if(this.auth.isAuthenticated()){
-      const test = this.userService.getUserInfo("Test");
-      console.log("User should be created... " + test);
+      this.userService.getUserInfo("aa847edee5847831acb269a4").subscribe(response => {
+        console.log(response);
+      });
+      console.log("User should be created... ");
     }
     else{
       this.button.nativeElement.click();

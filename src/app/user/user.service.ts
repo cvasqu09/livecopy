@@ -8,7 +8,7 @@ import { ICENumber } from '../ice-number/ice-number.model';
 
 @Injectable()
 export class UserService {
-	baseURL = "http://localhost:3000/api/users/";
+	baseURL = "http://liveapp-cluster-shard-00-00-jy1qa.mongodb.net:27017/api/users/";
 
   constructor(private http: Http) {}
 
