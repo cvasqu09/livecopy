@@ -24,7 +24,7 @@ router.get('/:id', function (req, res, next) {
     }
 
     res.status(200).json(user);
-  });
+  }).populate('eventIds');
 });
 
 // Used to create a user

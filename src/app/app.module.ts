@@ -38,7 +38,8 @@ import { ErrorService } from './error/error.service';
 
   providers: [
     UserService,
-    AuthService
+    AuthService,
+    ErrorService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,16 +2,21 @@
 	<form>
 	  <div class="form-group">
 	  		<label class="h4" for="fullName">Name</label>
-	    	<input type="email" class="form-control" id="fullName" [value]="user.fullName">
+	    	<input type="email" class="form-control" id="fullName" [value]="user?.fullName">
 	  </div>
 		<div class="form-group">
 					<label class="h4" for="createdEvents">Your Events</label>
-					<app-event-details *ngFor="let userEvent of userCreatedEvents" [event]="userEvent"></app-event-details>
+					<app-event-details *ngFor="let userEvent of user?.createdEventIds" [event]="userEvent"></app-event-details>
 		</div>
 	  <div class="form-group">
 		  <label class="h4" for="categories">Hobbies/Interests</label>
 			<br>
-			<span *ngFor="let category of user.categories" class="badge badge-pill badge-success">{{category}}</span>
+			<span *ngFor="let category of (user?.categories)" class="badge badge-pill badge-success">{{category}}</span>
 	  </div>
+		<div class="form-group">
+			<label class="h4" for="iceNumbers">ICE Numbers</label>
+			<br>
+		</div>
+
 	</form>
 </div>
