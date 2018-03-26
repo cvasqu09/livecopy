@@ -24,6 +24,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    window.location.reload();
     console.log("Logout Successful!");
   }
 

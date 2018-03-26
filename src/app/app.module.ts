@@ -14,6 +14,7 @@ import { DropdownComponent } from './home/dropdown/dropdown.component';
 import { appRoutes } from './frontend.routing';
 import { ProfileComponent } from './profile/profile.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { LoginAuthComponent } from './login-auth/login-auth.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { EventDetailsComponent } from './event-details/event-details.component';
     SearchBarComponent,
     DropdownComponent,
     ProfileComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    LoginAuthComponent
   ],
   imports: [
     BrowserModule,
