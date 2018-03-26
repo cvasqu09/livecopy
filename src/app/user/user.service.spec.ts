@@ -36,6 +36,8 @@ describe('UserService', () => {
 				expect(user.strikes).toBe(0);
 				expect(user.ICENumbers.length).toBe(2);
 				expect(user.ICENumbers[0] instanceof ICENumber).toBe(true);
+			}, err => {
+				throw new Error("Should have gotten the test user.")
 			})
 		}))
 	})

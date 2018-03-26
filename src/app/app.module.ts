@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { HttpModule } from '@angular/http';
 import { UserService } from './user/user.service';
@@ -35,7 +36,8 @@ import { LoginAuthComponent } from './login-auth/login-auth.component';
 
   providers: [
     UserService,
-    AuthService
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
