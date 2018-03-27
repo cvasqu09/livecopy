@@ -21,9 +21,9 @@ export class LoginAuthComponent implements OnInit {
     this.auth.handleAuthentication();
     if(this.auth.isAuthenticated()){
 
-      this.userService.getUserInfo('google-oauth2|110192101898249391522').subscribe(
+      this.userService.getUserInfo(localStorage.getItem('user_id')).subscribe(
         response => {
-          console.log("We got it boys");
+          console.log(response);
         },
         error => {
           this.profileSettings.triggerNewUserModal(true);
