@@ -1,0 +1,40 @@
+<!-- Create New User Modal -->
+<button #openCreateUserModal class="btn btn-primary" id="openCreateUserModal" type="button" [hidden]="true" data-toggle="modal" data-target="#createUserModal">
+  Launch Create New User Modal
+</button>
+
+<div  class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center" id="loginModalTitle">Create new account!</h3>
+      </div>
+      <div class="modal-body text-center">
+        <form>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" id="fName" placeholder="First name">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" id="lName" placeholder="Last name">
+              </div>
+            </div>
+            <hr>
+            <h4>Select categories</h4>
+            <div class="form-row">
+              <div class="btn-group-toggle" data-toggle="buttons" *ngFor="let catagory of catagories" (click)=catagorySelected(catagory.name)>
+                <label class="btn btn-secondary" id={{catagory.id}}>
+                  <input type="checkbox" checked autocomplete="off">{{catagory.name}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer align-self-center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=submitNewUser()>Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
