@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { User } from './user.model';
 import { ICENumber } from '../ice-number/ice-number.model';
+import { environment } from "../../environments/environment"
 
 
 @Injectable()
 export class UserService {
-	baseURL = "http://localhost:3000/api/users/";
+	baseURL = `${environment.domain_name}/api/users/`;
 
   constructor(private http: Http) {}
 
