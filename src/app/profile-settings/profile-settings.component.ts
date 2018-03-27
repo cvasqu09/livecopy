@@ -19,8 +19,16 @@ export class ProfileSettingsComponent implements OnInit, AfterViewInit {
     {
       "name": "Baseball",
       "id": "baseball-tag"
+    },
+    {
+      "name": "Volleyball",
+      "id": "volleyball-tag"
+    },
+    {
+      "name": "Disc Golf",
+      "id": "disc-golf-tag"
     }
-  ]
+  ] // TODO: Generalize this object for the entire project
 
   constructor(private openCreateUserModal:ElementRef) { }
 
@@ -42,5 +50,15 @@ export class ProfileSettingsComponent implements OnInit, AfterViewInit {
 
   changeSettingsRequested(): boolean{
     return this.settingsRequest;
+  }
+
+  catagorySelected(catagory): void {
+
+    console.log(catagory);
+  }
+
+  submitNewUser(): void {
+
+    console.log("New User submitted");
   }
 }
