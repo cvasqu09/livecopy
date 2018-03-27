@@ -35,7 +35,6 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = ''; //Without this, the URL will contain token information
         this.setLocalSession(authResult);
-        window.location.reload();
       } else if (err) {
       }
     });
@@ -59,6 +58,7 @@ export class AuthService {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if(profile){
         localStorage.setItem("user_id", profile.sub);
+        window.location.reload();
       }
       if(err){
         console.log("Problem retrieving profile...\n" + err);

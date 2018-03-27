@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { User } from '../user/user.model';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-profile-settings',
@@ -6,11 +8,12 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
   styleUrls: ['./profile-settings.component.css']
 })
 
-export class ProfileSettingsComponent implements OnInit, AfterViewInit {
+export class ProfileSettingsComponent implements OnInit {
 
   @ViewChild('openCreateUserModal') openCreateUserModal:ElementRef;
 
   public settingsRequest = false;
+  public userCatagories = [];
   public catagories: any[] = [
     {
       "name": "Chess",
@@ -30,7 +33,7 @@ export class ProfileSettingsComponent implements OnInit, AfterViewInit {
     }
   ] // TODO: Generalize this object for the entire project
 
-  constructor(private openCreateUserModal:ElementRef) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.openCreateUserModal.nativeElement.click();
@@ -39,13 +42,6 @@ export class ProfileSettingsComponent implements OnInit, AfterViewInit {
   triggerNewUserModal(val): void {
 
     this.settingsRequest = val;
-    //const newUser = new User("Test Name", [], [], 0, []);
-
-    // this.userService.createUser(newUser).subscribe(
-    //   response => {
-    //     console.log(response);
-    //   }
-    // );
   }
 
   changeSettingsRequested(): boolean{
@@ -54,11 +50,23 @@ export class ProfileSettingsComponent implements OnInit, AfterViewInit {
 
   catagorySelected(catagory): void {
 
-    console.log(catagory);
+    if (this.userCatagories.includes(catagory)){
+      this.userCatagories.splice(this.userCatagories.indexOf(catagory),1);
+    }
+    else {
+      this.userCatagories.push(catagory);
+    }
   }
 
   submitNewUser(): void {
 
-    console.log("New User submitted");
+    var fullName =  (<HTMLInputElement>document.getElementById("fName")).value + " " +(<HTMLInputElement>document.getElementById("lName")).value;
+    const newUser = new User(fullName, this.userCatagories, [], 0, [], localStorage.getItem("user_id"));
+    console.log(newUser);
+    this.userService.createUser(newUser).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
   }
 }

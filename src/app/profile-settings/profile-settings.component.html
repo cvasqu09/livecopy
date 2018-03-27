@@ -14,18 +14,18 @@
           <div class="form-group">
             <div class="form-row">
               <div class="col">
-                <input type="text" class="form-control" placeholder="First name">
+                <input type="text" class="form-control" id="fName" placeholder="First name">
               </div>
               <div class="col">
-                <input type="text" class="form-control" placeholder="Last name">
+                <input type="text" class="form-control" id="lName" placeholder="Last name">
               </div>
             </div>
             <hr>
             <h4>Select categories</h4>
             <div class="form-row">
-              <div class="btn-group-toggle" data-toggle="buttons" *ngFor="let catagory of catagories">
-                <label class="btn btn-secondary active" id={{catagory.id}}>
-                  <input type="checkbox" checked autocomplete="off" (change)="this.catagorySelected(catagory.name)">{{catagory.name}}
+              <div class="btn-group-toggle" data-toggle="buttons" *ngFor="let catagory of catagories" (click)=catagorySelected(catagory.name)>
+                <label class="btn btn-secondary" id={{catagory.id}}>
+                  <input type="checkbox" checked autocomplete="off">{{catagory.name}}
                 </label>
               </div>
             </div>
@@ -33,7 +33,7 @@
         </form>
       </div>
       <div class="modal-footer align-self-center">
-        <button type="button" class="btn btn-secondary" (click)=submitNewUser()>Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)=submitNewUser()>Submit</button>
       </div>
     </div>
   </div>
