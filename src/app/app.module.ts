@@ -15,6 +15,7 @@ import { appRoutes } from './frontend.routing';
 import { ProfileComponent } from './profile/profile.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
 import { LoginAuthComponent } from './login-auth/login-auth.component';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginAuthComponent } from './login-auth/login-auth.component';
     DropdownComponent,
     ProfileComponent,
     EventDetailsComponent,
-    LoginAuthComponent
+    LoginAuthComponent,
+    ProfileSettingsComponent
   ],
   imports: [
     BrowserModule,
