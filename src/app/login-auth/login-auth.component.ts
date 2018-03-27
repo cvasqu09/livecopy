@@ -11,7 +11,17 @@ import { UserService } from '../user/user.service';
 })
 export class LoginAuthComponent implements OnInit {
 
-  @ViewChild('openLoginModal') button:ElementRef;  //Reference to modal button to trigger modal automically
+  @ViewChild('openLoginModal') openLoginModal:ElementRef;  //Reference to modal button to trigger modal automically
+  @ViewChild('openCreateUserModal') openCreateUserModal:ElemenRef;
+
+  public catagories: string[] = [
+    {
+      "name": "Chess"
+    },
+    {
+      "name": "Baseball"
+    }
+  ]
 
   constructor(public auth: AuthService, private userService: UserService) {}
 
@@ -19,15 +29,39 @@ export class LoginAuthComponent implements OnInit {
     this.auth.handleAuthentication();
     if(this.auth.isAuthenticated()){
 
-      // this.userService.createUser(new User("Test Name", [],[],0,[])).subscribe(response => {
-      //   console.log(response);
-      // });
-      this.userService.getUserInfo('aa847edee5847831acb269a4').subscribe(response =>{
-        console.log(response);
-      });
+      this.userService.getUserInfo('google-oauth2|110192101898249391522').subscribe(
+        response => {
+          console.log("We got it boys");
+        },
+        error => {
+          this.createNewUserForm();
+        }
+      );
     }
     else{
-      this.button.nativeElement.click();
+      this.openLoginModal.nativeElement.click();
     }
+  }
+
+  createNewUserForm(): void {
+
+    this.openCreateUserModal.nativeElement.click();
+
+    //const newUser = new User("Test Name", [], [], 0, []);
+
+    // this.userService.createUser(newUser).subscribe(
+    //   response => {
+    //     console.log(response);
+    //   }
+    // );
+  }
+
+  submitNewUser(){
+
+
+  }
+
+  addCatagory(cat){
+    console.log("Clicked: " + cat.checked);
   }
 }

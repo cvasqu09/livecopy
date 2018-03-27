@@ -1,11 +1,11 @@
-<!-- Button trigger modal -->
+<!-- Login Button Modal -->
 <!-- Default is hidden, will automatically trigger upon failed authenitication -->
 <button #openLoginModal class="btn btn-primary" id="openLoginModal" type="button" [hidden]="true" data-toggle="modal" data-target="#loginModal">
-  Launch demo modal
+  Launch Login Modal
 </button>
 
 <!-- Modal -->
-<div #loginModal class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -16,6 +16,47 @@
       </div>
       <div class="modal-footer align-self-center">
         <button type="button" class="btn btn-secondary" (click)=auth.login()>Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create New User Modal -->
+<button #openCreateUserModal class="btn btn-primary" id="openCreateUserModal" type="button" [hidden]="true" data-toggle="modal" data-target="#createUserModal">
+  Launch Create New User Modal
+</button>
+
+<div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center" id="loginModalTitle">Create new account!</h3>
+      </div>
+      <div class="modal-body text-center">
+        <form>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="First name">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Last name">
+              </div>
+            </div>
+            <hr>
+            <h4>Select categories</h4>
+            <div class="form-row">
+              <div class="btn-group-toggle" data-toggle="buttons" *ngFor="let catagory of catagories">
+                <label class="btn btn-secondary active">
+                  <input type="checkbox" checked autocomplete="off">{{catagory.name}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer align-self-center">
+        <button type="button" class="btn btn-secondary" (click)=submitNewUser()>Submit</button>
       </div>
     </div>
   </div>
