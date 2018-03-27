@@ -6,7 +6,8 @@ const app = express();
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-mongoose.connect('mongodb://jstuve22:joshs22@liveapp-cluster-shard-00-00-jy1qa.mongodb.net:27017,liveapp-cluster-shard-00-01-jy1qa.mongodb.net:27017,liveapp-cluster-shard-00-02-jy1qa.mongodb.net:27017/LiveDB?ssl=true&replicaSet=LiveApp-Cluster-shard-0&authSource=admin');
+const connectionString = `mongodb://${process.env.MONGOUSER}:${process.env.MONGOPASS}@${process.env.MONGO_ENDPOINT}`;
+mongoose.connect(connectionString);
 // API file for interacting with MongoDB
 const api = require('./server/routes/api');
 const eventsRoutes = require('./server/routes/events');
