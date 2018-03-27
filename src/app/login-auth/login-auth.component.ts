@@ -22,7 +22,7 @@ export class LoginAuthComponent implements OnInit {
       // this.userService.createUser(new User("Test Name", [],[],0,[])).subscribe(response => {
       //   console.log(response);
       // });
-      this.userService.getUserInfo('aaXX847edee5847831acb269a4').subscribe(response =>{
+      this.userService.getUserInfo('aa847edee5847831acb269a4').subscribe(response =>{
         console.log(response);
       });
     }
