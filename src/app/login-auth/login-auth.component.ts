@@ -16,10 +16,12 @@ export class LoginAuthComponent implements OnInit {
 
   public catagories: string[] = [
     {
-      "name": "Chess"
+      "name": "Chess",
+      "id": "check-tag"
     },
     {
-      "name": "Baseball"
+      "name": "Baseball",
+      "id": "baseball-tag"
     }
   ]
 

@@ -47,7 +47,7 @@
             <h4>Select categories</h4>
             <div class="form-row">
               <div class="btn-group-toggle" data-toggle="buttons" *ngFor="let catagory of catagories">
-                <label class="btn btn-secondary active">
+                <label class="btn btn-secondary active" id={{catagory.id}}>
                   <input type="checkbox" checked autocomplete="off">{{catagory.name}}
                 </label>
               </div>
