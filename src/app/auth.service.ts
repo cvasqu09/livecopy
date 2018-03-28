@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
-
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,8 @@ export class AuthService {
     domain: 'jstuve.auth0.com',
     responseType: 'token id_token',
     audience: 'https://jstuve.auth0.com/userinfo',
-    scope: 'openid profile'
+    scope: 'openid profile',
+    redirectUri: `${environment.domain_name}`
   });
 
   constructor() { }
