@@ -2,12 +2,13 @@ import { Http, Response, Headers } from "@angular/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Event } from './event.model';
+import { environment } from '../../environments/environment'
 
 import 'rxjs/Rx';
 
 @Injectable()
 export class EventService {
-	baseURL = "http://localhost:3000/api/events/";
+	baseURL = `${environment.domain_name}/api/events/`;
 
   constructor(private http: Http) { 
 

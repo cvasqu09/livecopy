@@ -15,6 +15,9 @@ const userRoutes = require('./server/routes/users');
 const smsRoutes = require('./server/routes/sms');
 const appRoutes = require('./server/routes/app');
 
+// Default engine supports regular HTML
+app.set('view engine', 'ejs');
+
 // Parser for incoming requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,4 +51,4 @@ const port = process.env.PORT || '3000';
 app.set('port', port);
 const server = http.createServer(app);
 
-server.listen(port, () => console.log(`Running on localhost:${port}`));
+server.listen(port, () => console.log(`Running on :${port}`));
